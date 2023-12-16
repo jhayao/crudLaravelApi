@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('student_email', 100);
             $table->string('student_phone', 100);
             $table->string('student_address', 100);
-            $table->string('student_image', 100);
+            // $table->string('student_image', 100);
             $table->timestamps();
         });
     }

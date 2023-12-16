@@ -18,7 +18,7 @@ class StudentController extends Controller
     {
         $studentList = Student::all();
         if ($studentList->isEmpty()) {
-            return $this->error("No Student Found", 404);
+            return $this->failure("No Student Found");
         }
         return $this->success("Student List", $studentList);
     }
@@ -70,7 +70,7 @@ class StudentController extends Controller
         if ($student)
             return $this->success("Student Updated", $student);
         else
-            return $this->error("Student Not Found", 404);
+            return $this->failure("Student Not Found");
     }
 
 
@@ -82,9 +82,9 @@ class StudentController extends Controller
         $student = Student::find($request->id);
         if ($student) {
             $student->delete();
-            return response()->json('Student successfully deleted', 200);
+            return $this->success("Student succesfully deleted", $student);
         }
-        return response()->json('Student not found', 404);
+        return $this->failure("Student Not Found");
 
     }
 }

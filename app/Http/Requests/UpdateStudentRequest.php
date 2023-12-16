@@ -25,7 +25,7 @@ class UpdateStudentRequest extends FormRequest
             "student_name" => "string|max:255",
             "student_phone" => "string|max:255",
             "student_address" => "string|max:255",
-            "student_image" => "string|max:255",
+            // "student_image" => "string|max:255",
             "student_email" => [
                 "string",
                 "email",

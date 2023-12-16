@@ -26,7 +26,7 @@ class StoreStudentRequest extends FormRequest
             "student_email" => ["required", "string", "email", "max:255", "unique:students"],
             "student_phone" => ["required", "string", "max:255"],
             "student_address" => ["required", "string", "max:255"],
-            "student_image" => ["required", "string", "max:255"],
+            // "student_image" => ["required", "string", "max:255"],
         ];
     }
 }
