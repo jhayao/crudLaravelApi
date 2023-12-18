@@ -7,10 +7,17 @@ use App\Http\Requests\UpdateStudentRequest;
 use App\Models\Api\Student;
 use Illuminate\Http\Request;
 use App\Traits\HttpResponseFormatter;
+use Illuminate\Support\Facades\DB;
+use App\Models\User;
 
 class StudentController extends Controller
 {
     use HttpResponseFormatter;
+
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -66,11 +73,23 @@ class StudentController extends Controller
 
         $request->validated();
         $student = Student::find($request->id);
-        $student->update($request->all());
-        if ($student)
-            return $this->success("Student Updated", $student);
-        else
-            return $this->failure("Student Not Found");
+        try {
+            DB::beginTransaction();
+            $user = User::where('email', $student->student_email)->first();
+            $user->name = $request->student_name;
+            $user->email = $request->student_email;
+            $user->update();
+            $student->update($request->all());
+            if ($student) {
+                DB::commit();
+                return $this->success("Student Updated", $student);
+            } else
+                return $this->failure("Student Not Found");
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $this->failure("Student Not Updated" . $e->getMessage());
+        }
+
     }
 
 

@@ -33,6 +33,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function tokensExpireIn()
+    {
+        return now()->addMinutes(60); // Adjust the expiration time as needed
+    }
+
     /**
      * The attributes that should be cast.
      *

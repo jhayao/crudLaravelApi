@@ -12,11 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('students', function (Blueprint $table) {
-            $table->id();
+            $table->integer("id")->autoIncrement();
             $table->string('student_name', 100);
             $table->string('student_email', 100);
-            $table->string('student_phone', 100);
-            $table->string('student_address', 100);
+            $table->string('student_phone', 100)->nullable();
+            $table->string('student_address', 100)->nullable();
+            $table->foreign('student_email')->references('email')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
             // $table->string('student_image', 100);
             $table->timestamps();
         });
